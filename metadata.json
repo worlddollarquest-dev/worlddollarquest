@@ -1,0 +1,6 @@
+{
+  "name": "World Dollar Quest",
+  "description": "Learn, Work, and Earn with practical tools, AI resources, digital products, freelancing guides, and structured quests for online opportunities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
