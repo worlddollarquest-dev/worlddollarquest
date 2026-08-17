@@ -182,7 +182,7 @@ export interface CurrencyConfig {
   rateAgainstUSD: number;
 }
 
-export type PaymentProviderName = 'stripe' | 'paypal' | 'mobile_wallet' | 'sandbox';
+export type PaymentProviderName = 'usdt' | 'stripe' | 'paypal' | 'mobile_wallet' | 'sandbox';
 export type PaymentProvider = PaymentProviderName;
 export type PaymentStatus = 'pending' | 'processing' | 'paid' | 'completed' | 'failed' | 'cancelled' | 'refunded' | 'partially_refunded';
 export type OrderStatus = 'pending' | 'processing' | 'completed' | 'cancelled' | 'refunded';

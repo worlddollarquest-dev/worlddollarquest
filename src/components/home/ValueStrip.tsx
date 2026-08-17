@@ -12,8 +12,8 @@ export const ValueStrip: React.FC<ValueStripProps> = ({ onNavigate }) => {
       description: 'Useful utilities to automate and speed up digital work.',
       icon: Wrench,
       path: '/free-tools',
-      color: 'text-teal-400',
-      bgColor: 'bg-teal-500/10 border-teal-500/20',
+      color: 'text-cyan-400',
+      bgColor: 'bg-cyan-500/10 border-cyan-500/20',
     },
     {
       title: 'Practical Resources',
@@ -28,8 +28,8 @@ export const ValueStrip: React.FC<ValueStripProps> = ({ onNavigate }) => {
       description: 'High-utility templates, spreadsheets, and playbooks.',
       icon: Package,
       path: '/digital-products',
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10 border-blue-500/20',
+      color: 'text-pink-400',
+      bgColor: 'bg-pink-500/10 border-pink-500/20',
     },
     {
       title: 'Work & Earn Guides',
@@ -42,20 +42,20 @@ export const ValueStrip: React.FC<ValueStripProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <section className="py-10 border-b border-slate-900 bg-slate-950/60">
+    <section className="py-12 border-b border-white/10 bg-[#080B1A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {points.map((point) => (
             <div
               key={point.title}
               onClick={() => onNavigate(point.path)}
-              className="p-5 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900 transition-all cursor-pointer group flex items-start gap-4"
+              className="p-5 rounded-2xl glass-panel hover:border-cyan-500/40 hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex items-start gap-4 shadow-lg"
             >
-              <div className={`p-3 rounded-xl border ${point.bgColor} shrink-0`}>
+              <div className={`p-3 rounded-xl border ${point.bgColor} shrink-0 shadow-inner`}>
                 <point.icon className={`w-5 h-5 ${point.color}`} />
               </div>
               <div className="min-w-0">
-                <p className="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">
+                <p className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors">
                   {point.title}
                 </p>
                 <p className="text-xs text-slate-400 mt-1 leading-relaxed">

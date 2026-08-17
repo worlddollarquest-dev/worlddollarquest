@@ -65,20 +65,21 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
     <>
       <header
         id="main-header"
-        className={`sticky top-0 z-40 w-full transition-all duration-200 ${
+        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           scrolled
-            ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/20'
-            : 'bg-slate-950/70 backdrop-blur-sm border-b border-slate-800/40'
+            ? 'bg-[#050816]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/40'
+            : 'bg-[#050816]/75 backdrop-blur-md border-b border-white/5'
         }`}
       >
         {/* Optional Announcement Banner */}
         {siteSettings.announcementBanner.enabled && (
-          <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-b border-teal-500/20 px-4 py-1.5 text-center text-xs text-slate-300 flex items-center justify-center gap-2">
-            <span>{siteSettings.announcementBanner.text}</span>
+          <div className="bg-gradient-to-r from-[#080B1A] via-indigo-950/90 to-[#080B1A] border-b border-indigo-500/30 px-4 py-2 text-center text-xs text-slate-200 flex items-center justify-center gap-2 shadow-inner">
+            <span className="inline-block w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+            <span className="font-medium">{siteSettings.announcementBanner.text}</span>
             <button
               type="button"
               onClick={() => handleNavClick(siteSettings.announcementBanner.linkUrl)}
-              className="text-teal-400 font-semibold hover:underline flex items-center gap-1"
+              className="text-cyan-400 font-bold hover:underline flex items-center gap-1"
             >
               {siteSettings.announcementBanner.linkText} &rarr;
             </button>
@@ -86,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
         )}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-18">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <div className="flex items-center gap-3">
               <button
@@ -94,14 +95,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
                 onClick={() => handleNavClick('/')}
                 className="flex items-center gap-2.5 text-left group focus:outline-none"
               >
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-indigo-600 flex items-center justify-center text-slate-950 font-black shadow-md shadow-teal-500/20 group-hover:scale-105 transition-transform">
-                  <span className="text-lg tracking-tighter">$</span>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4F46FF] via-[#8B5CF6] to-[#EC4899] flex items-center justify-center text-white font-black shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform shimmer-sweep">
+                  <span className="text-xl tracking-tighter">$</span>
                 </div>
                 <div>
-                  <span className="font-extrabold tracking-tight text-base sm:text-lg text-white group-hover:text-teal-300 transition-colors">
+                  <span className="font-extrabold tracking-tight text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
                     {siteSettings.logoText}
                   </span>
-                  <p className="text-[10px] text-teal-400 tracking-wider font-semibold uppercase">
+                  <p className="text-[10px] text-gradient-secondary font-bold uppercase tracking-wider">
                     {siteSettings.tagline}
                   </p>
                 </div>

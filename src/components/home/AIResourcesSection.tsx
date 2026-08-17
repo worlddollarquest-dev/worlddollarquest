@@ -19,7 +19,7 @@ export const AIResourcesSection: React.FC<AIResourcesSectionProps> = ({ onNaviga
       title: 'AI Tools Directory',
       description: 'Curated list of high-utility tools for coding, writing, research, and data automation.',
       icon: Sparkles,
-      color: 'text-teal-400',
+      color: 'text-cyan-400',
       badge: 'Curated',
     },
     {
@@ -33,7 +33,7 @@ export const AIResourcesSection: React.FC<AIResourcesSectionProps> = ({ onNaviga
       title: 'AI Workflow Blueprints',
       description: 'Step-by-step operational workflows to eliminate repetitive digital admin tasks.',
       icon: Workflow,
-      color: 'text-blue-400',
+      color: 'text-pink-400',
       badge: 'Systems',
     },
     {
@@ -47,7 +47,7 @@ export const AIResourcesSection: React.FC<AIResourcesSectionProps> = ({ onNaviga
       title: 'AI Productivity Systems',
       description: 'Techniques for using AI as a 24/7 research partner and executive editor.',
       icon: Zap,
-      color: 'text-teal-400',
+      color: 'text-cyan-400',
       badge: 'Productivity',
     },
     {
@@ -60,25 +60,25 @@ export const AIResourcesSection: React.FC<AIResourcesSectionProps> = ({ onNaviga
   ];
 
   return (
-    <section className="py-16 sm:py-24 border-b border-slate-900 bg-[#0a0f1d]">
+    <section className="py-20 sm:py-28 border-b border-white/10 bg-[#080B1A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
-            <div className="flex items-center gap-2 text-teal-400 text-xs font-bold uppercase tracking-wider mb-2">
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">
               <Sparkles className="w-4 h-4" />
               <span>AI Intelligence Hub</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Actionable AI Resources & Workflows
             </h2>
-            <p className="text-sm text-slate-400 mt-2 max-w-xl">
+            <p className="text-sm sm:text-base text-slate-300 mt-2 max-w-xl">
               Turn AI from a confusing buzzword into a daily multiplier for your freelance and digital product business.
             </p>
           </div>
           <button
             type="button"
             onClick={() => onNavigate('/ai-resources')}
-            className="self-start md:self-auto px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-teal-300 hover:text-white text-xs font-bold transition-colors flex items-center gap-1.5"
+            className="self-start md:self-auto px-6 py-3 rounded-xl btn-secondary-glass text-cyan-300 hover:text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Explore AI Hub</span>
             <ArrowRight className="w-4 h-4" />
@@ -90,29 +90,29 @@ export const AIResourcesSection: React.FC<AIResourcesSectionProps> = ({ onNaviga
             <div
               key={item.title}
               onClick={() => onNavigate('/ai-resources')}
-              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/30 hover:bg-slate-900 transition-all cursor-pointer group flex flex-col justify-between"
+              className="p-7 rounded-3xl glass-panel hover:border-cyan-500/40 hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between shadow-xl"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 group-hover:scale-105 transition-transform">
+                  <div className="p-3.5 rounded-2xl bg-[#050816] border border-white/10 group-hover:scale-110 transition-transform shadow-md">
                     <item.icon className={`w-5 h-5 ${item.color}`} />
                   </div>
-                  <span className="text-[10px] font-semibold text-teal-300 bg-teal-500/10 px-2 py-0.5 rounded-full border border-teal-500/20">
+                  <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
                     {item.badge}
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white group-hover:text-teal-300 transition-colors">
+                <h3 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed">
                   {item.description}
                 </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-teal-400 group-hover:text-teal-300 font-semibold">
+              <div className="pt-5 mt-5 border-t border-white/10 flex items-center justify-between text-xs text-cyan-400 group-hover:text-cyan-300 font-bold">
                 <span>View Resources</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
               </div>
             </div>
           ))}

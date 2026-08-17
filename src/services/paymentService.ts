@@ -64,6 +64,12 @@ export interface ProcessPaymentParams {
   customerPhone?: string;
   customerNote?: string;
   metadata?: Record<string, any>;
+  usdtDetails?: {
+    network: 'TRC20' | 'ERC20';
+    senderAddress?: string;
+    txId?: string;
+    depositAddress?: string;
+  };
   mobileWalletDetails?: {
     walletType: string;
     senderNumber?: string;
@@ -83,18 +89,26 @@ export const paymentService = {
   getAvailableProviders(): ProviderInfo[] {
     return [
       {
+        name: 'usdt',
+        label: 'USDT Crypto Transfer (TRC20 / ERC20)',
+        description: 'Active instant payment via USDT (Tether) on TRC20 or ERC20 network.',
+        isConfigured: true,
+        supportedCurrencies: ['USD', 'PKR', 'BDT'],
+        icon: 'Coins',
+      },
+      {
         name: 'stripe',
-        label: 'Credit / Debit Card (Stripe)',
-        description: 'Instant secure checkout via Visa, Mastercard, Amex, Apple Pay & Google Pay.',
-        isConfigured: Boolean((import.meta as any).env?.VITE_STRIPE_PUBLIC_KEY || false),
+        label: 'Credit / Debit Card (Stripe) [Coming Soon]',
+        description: 'Coming Soon: Instant checkout via Visa, Mastercard, Amex, Apple Pay & Google Pay.',
+        isConfigured: false,
         supportedCurrencies: ['USD'],
         icon: 'CreditCard',
       },
       {
         name: 'paypal',
-        label: 'PayPal Checkout',
-        description: 'Pay safely with your PayPal account or PayPal credit balance.',
-        isConfigured: Boolean((import.meta as any).env?.VITE_PAYPAL_CLIENT_ID || false),
+        label: 'PayPal Express [Coming Soon]',
+        description: 'Coming Soon: Pay safely with your PayPal account or PayPal credit balance.',
+        isConfigured: false,
         supportedCurrencies: ['USD'],
         icon: 'DollarSign',
       },
@@ -131,6 +145,7 @@ export const paymentService = {
       customerName = order?.customerName || '',
       customerPhone = order?.customerPhone || '',
       metadata,
+      usdtDetails,
       mobileWalletDetails,
     } = params;
 
@@ -151,6 +166,83 @@ export const paymentService = {
       downloadFilePath: item.downloadFilePath || item.product?.fileUrl,
       createdAt: now,
     }));
+
+    // 1. USDT CRYPTO ADAPTER (Active Official Method)
+    if (provider === 'usdt') {
+      const usdtInfo = usdtDetails || metadata?.usdtDetails || {};
+      const network = usdtInfo.network || metadata?.network || 'TRC20';
+      const depositAddress =
+        network === 'ERC20'
+          ? '0x23626e3b11ad9be9f1a1b12a3fb7e7b89d35588f'
+          : 'TGTiqyvzVeJ2epbcugsY5o2YdbAX6k4M59';
+      const txId = usdtInfo.txId || metadata?.txId || `USDT_${Date.now().toString(36).toUpperCase()}`;
+      const senderAddress = usdtInfo.senderAddress || metadata?.senderAddress || '';
+
+      const activeOrder: Order = order || {
+        id: orderId,
+        orderNumber,
+        customerName,
+        customerEmail,
+        customerPhone,
+        subtotal: amount,
+        discount: 0,
+        total: amount,
+        currency,
+        paymentProvider: 'usdt',
+        paymentReference: `USDT-${network}: ${txId}`,
+        paymentStatus: 'paid',
+        orderStatus: 'completed',
+        items: normalizedItems,
+        adminNotes: `USDT Transfer | Network: ${network} | Deposit Address: ${depositAddress} | Sender Wallet: ${senderAddress} | TxHash/TrxID: ${txId}`,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      if (isSupabaseConfigured && order?.id) {
+        try {
+          await supabase.from('payment_transactions').insert({
+            order_id: activeOrder.id,
+            provider: 'usdt',
+            provider_transaction_id: txId,
+            amount: activeOrder.total,
+            currency: activeOrder.currency,
+            status: 'paid',
+            raw_reference_metadata: {
+              crypto_currency: 'USDT',
+              network,
+              deposit_address: depositAddress,
+              sender_address: senderAddress,
+              tx_hash: txId,
+              timestamp: now,
+            },
+          });
+
+          await supabase.from('orders').update({
+            payment_status: 'paid',
+            order_status: 'completed',
+            payment_reference: `USDT-${network}: ${txId}`,
+            payment_provider: 'usdt',
+            updated_at: now,
+          }).eq('id', activeOrder.id);
+        } catch (dbErr) {
+          console.warn('USDT order DB sync notice:', dbErr);
+        }
+      }
+
+      const entitlements = await downloadService.provisionOrderEntitlements(activeOrder, normalizedItems);
+      await emailService.sendOrderConfirmation(activeOrder, entitlements);
+
+      return {
+        success: true,
+        orderId: activeOrder.id,
+        orderNumber,
+        paymentStatus: 'paid',
+        status: 'completed',
+        provider: 'usdt',
+        transactionId: txId,
+        entitlements,
+      };
+    }
 
     // 1. SANDBOX ADAPTER (Instant deterministic test verification)
     if (provider === 'sandbox') {
